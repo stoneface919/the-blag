@@ -1,0 +1,19 @@
+{
+  "name": "theblag",
+  "version": "0.0.1",
+  "description": "A personal blog written using EJS",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/stoneface919/the_blag.git"
+  },
+  "author": "Saùl Z",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/stoneface919/the_blag/issues"
+  },
+  "homepage": "https://github.com/stoneface919/the_blag#readme"
+}
