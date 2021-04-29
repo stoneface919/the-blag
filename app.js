@@ -13,7 +13,7 @@ server.set('view engine', 'ejs')
 
 ///database connection 
 
-mongoose.connect('mongodb+srv://admin_blosst:stoneface1998@developmentpractice.bhanj.mongodb.net/blogPosts', { useUnifiedTopology: true,  useNewUrlParser: true  })
+mongoose.connect('mongodb+srv://someadmin:passwords@developmentpractice.bhanj.mongodb.net/blogPosts', { useUnifiedTopology: true,  useNewUrlParser: true  })
 
 
 ////////////////////////////////////////////////////// Mongo Schemas
