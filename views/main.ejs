@@ -2,9 +2,9 @@
 
 <h1>Hello this the blog</h1>
 <% posts.forEach(function (post) { %>
-    <h1><%= post.title %></h1> 
-    <p><%= post.entrie.substr(0, 300)%> 
-    <a href="/posts/<%= post.title %>" >Read more...</a></p>
+    <h1><%= post.name %></h1> 
+    <p><%= post.postEntry%> 
+    <a href="/posts/<%= post.name %>" >Read more...</a></p>
     
 <% }); %> 
 <button  style="color: aliceblue;" class="btn btn-primary"> <a href="/compose">Compose</a>fdfdf</button>

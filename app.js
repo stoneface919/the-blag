@@ -2,35 +2,67 @@
 let express = require('express');
 let bodyParser= require('body-parser');
 let ejs = require('ejs');
-let lodash = require('lodash')
+let mongoose = require('mongoose')
+let _ = require('lodash')
 server = express();
 server.use(bodyParser.urlencoded({extended:true}));
 server.use(express.static('public'));
 
 
 server.set('view engine', 'ejs')
-const homeContent = "Server Content"
+
+///database connection 
+
+mongoose.connect('mongodb+srv://admin_blosst:stoneface1998@developmentpractice.bhanj.mongodb.net/blogPosts', { useUnifiedTopology: true,  useNewUrlParser: true  })
+
+
+////////////////////////////////////////////////////// Mongo Schemas
+
+const blogSchema = new mongoose.Schema({
+    name: {
+        type: String,
+        required : [true, 'You need a title for your post']
+    },
+    postEntry: {
+        type: String,
+        required: [true, 'You need a blod post entrie']
+    }
+})
+
+const BlogItem = mongoose.model('Post', blogSchema)
+
+
+
+
+
+
 const aboutContent = 'About Content'
 const contactContent = 'Contact Content'
 
 var posts = [ ]
 server.get('/', (req, res)=>{
-    res.render('main', {posts: posts})
+
+
+    BlogItem.find({}, function (err, results){
+        if(err){
+            console.log(err)
+        }else {
+            results.forEach(function(element){
+                console.log(element.name)
+            })
+            res.render('main', {posts: results})
+        }
+    })
+    
    
     
 })
 server.get('/posts/:postName' ,(req,res)=>{
-    console.log(req.params.postName)
-    for(post of posts) {
-        if (lodash.lowerCase(post.title) === lodash.lowerCase(req.params.postName)) {
-            res.render('post',{
-                title:post.title,
-                entrie:post.entrie
-            })
-    
-        }
+    BlogItem.find({name:req.params.postName}, function(err, results){
+        if (!err){
+            res.render('post', {title:results[0].name, entrie: results[0].postEntry})
     }
-    
+    })
 
 })
 
@@ -47,16 +79,22 @@ server.get('/contact', (req,res)=>{
 server.get('/compose', (req, res)=>{
     res.render('compose')
 })
-server.post('/compose', (req,res)=>{ 
-    const post = {
-        title: req.body.postTitle ,
-        entrie: req.body.postEntry
-    }
 
-    posts.push(post)
-    res.redirect('/')
-    console.log(posts)
+
+server.post('/compose', (req,res)=>{ 
     
+    const title = req.body.postTitle 
+    const entrie = req.body.postEntry
+
+
+   BlogItem.create({name:title, postEntry: entrie}, function(err){
+       if(err){
+           console.log(err)
+       } else {
+           console.log("Succesfully added to the DB!")
+       }
+   })
+    res.redirect("/")
 
 
     // entries[req.body.postTitle] = req.body.postEntry
